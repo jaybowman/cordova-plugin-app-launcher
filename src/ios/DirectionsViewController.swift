@@ -53,6 +53,9 @@ class DirectionsViewController: UIViewController, UITableViewDataSource {
         else  if direction.contains("Continue") {
             imgName = "arrow.up"
         }
+        else  if direction.contains("Go south") {
+            imgName = "arrow.down"
+        }
         else  if direction.contains("U-turn") {
             imgName = "arrow.uturn.down"
         }
