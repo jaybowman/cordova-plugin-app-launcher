@@ -31,7 +31,7 @@ class NavigateRouteViewController: UIViewController  {
     
     // MARK: Instance properties
        /// The route task to solve the route between stops, using the online routing service.
-       var routeTask = AGSRouteTask(url: .worldRoutingService)
+       var routeTask = AGSRouteTask(url: .carRoutingService)
        /// The route result solved by the route task.
        var routeResult: AGSRouteResult!
        /// The route tracker for navigation. Use delegate methods to update tracking status.
@@ -234,13 +234,13 @@ class NavigateRouteViewController: UIViewController  {
         let firstRoute = routeResult.routes.first!
         directionsList = firstRoute.directionManeuvers
         // Create the data source from a local GPX file.
-        let gpxDataSource = AGSGPXLocationDataSource(name: "TESTROUTE")
-        self.gpxDataSource = gpxDataSource
+       // let gpxDataSource = AGSGPXLocationDataSource(name: "TESTROUTE")
+       // self.gpxDataSource = gpxDataSource
         //MARK: Line 205 is for simulation. Line 207 is for using your own location
         // Create a route tracker location data source to snap the location display to the route.
-        let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker, locationDataSource: gpxDataSource)
+       // let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker, locationDataSource: gpxDataSource)
 
-       //let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker)
+       let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker)
         
         // Set location display.
         mapView.locationDisplay.dataSource = routeTrackerLocationDataSource
