@@ -233,14 +233,29 @@ class NavigateRouteViewController: UIViewController  {
         // Set the mock location data source.
         let firstRoute = routeResult.routes.first!
         directionsList = firstRoute.directionManeuvers
+        // GET Distance and time
+        let distanceRemaining =  Double(round(100*(firstRoute.totalLength / 1609.3))/100)
+        let timeRemaining = timeFormatter.string(from: TimeInterval(firstRoute.travelTime * 60 * 3))! // add fudge factor of 4
+        
+        let distanceText = """
+        \(distanceRemaining) mi
+        """
+        let timeText = """
+        \(timeRemaining)
+        """
+        DispatchQueue.main.async { [self] in
+            self.distanceLabel.text = distanceText
+            self.timeLabel.text = timeText
+        }
+        
         // Create the data source from a local GPX file.
-       // let gpxDataSource = AGSGPXLocationDataSource(name: "TESTROUTE")
-       // self.gpxDataSource = gpxDataSource
+        //let gpxDataSource = AGSGPXLocationDataSource(name: "TESTROUTE")
+        //self.gpxDataSource = gpxDataSource
         //MARK: Line 205 is for simulation. Line 207 is for using your own location
         // Create a route tracker location data source to snap the location display to the route.
-       // let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker, locationDataSource: gpxDataSource)
+        //let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker, locationDataSource: gpxDataSource)
 
-       let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker)
+        let routeTrackerLocationDataSource = AGSRouteTrackerLocationDataSource(routeTracker: routeTracker)
         
         // Set location display.
         mapView.locationDisplay.dataSource = routeTrackerLocationDataSource
@@ -376,6 +391,7 @@ class NavigateRouteViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+               
         // Add the source code button item to the right of navigation bar.
         //(navigationItem.rightBarButtonItem as? SourceCodeBarButtonItem)?.filenames = //["NavigateRouteViewController"]
         // Avoid the overlap between the status label and the map content.
